@@ -10,6 +10,3 @@ node_map:
       - 192.168.122.132
     fabruns:
       - kubeadm/slave
-
-kubeadm:
-  kubeapi_endpoint: ${#node_map.kubeadm_master.hosts.0}:6443

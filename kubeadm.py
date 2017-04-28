@@ -8,7 +8,9 @@ from fablib.base import SimpleBase
 class Kubeadm(SimpleBase):
     def __init__(self, is_master=True):
         self.data_key = 'kubeadm'
-        self.data = {}
+        self.data = {
+            'version': '1.6',
+        }
         self.packages = {}
         self.services = {}
         self.is_master = is_master
@@ -28,11 +30,19 @@ class Kubeadm(SimpleBase):
             token = str(result)
             databag.set('kubeadm.token', token)
 
+            if data['version'] == '1.5':
+                run('kubectl apply -f http://docs.projectcalico.org/v2.1/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml')  # noqa
+                # run('kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-no-rbac.yaml')  # noqa
+            if data['version'] == '1.6':
+                run('kubectl apply -f http://docs.projectcalico.org/v2.1/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml')  # noqa
+                # run('kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml')  # noqa
+
         else:
             if 'kubeapi_endpoint' in data:
                 kubeapi_endpoint = data['kubeapi_endpoint']
             else:
-                kubeapi_endpoint = '{0}:6443'.format(env.cluster['node_map']['kubeadm_master'][0])
+                kubeapi_endpoint = '{0}:6443'.format(
+                    env.cluster['node_map']['kubeadm_master']['hosts'][0])
 
             if 'token' in data:
                 token = data['token']
