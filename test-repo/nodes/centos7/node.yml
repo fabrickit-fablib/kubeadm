@@ -1,0 +1,30 @@
+node_map:
+  kubernetes:
+    hosts:
+      - 192.168.122.131
+      - 192.168.122.132
+      - 192.168.122.133
+    fabruns:
+      - kubernetes/kubernetes
+  etcd:
+    hosts:
+      - 192.168.122.131
+      - 192.168.122.132
+      - 192.168.122.133
+    fabruns:
+      - kubernetes/etcd
+
+kubernetes:
+  # version: 1.5.1
+  version: 1.6.2
+  kube_master: 192.168.122.131
+  k8s_service_ip: 10.3.0.1
+  dns_service_ip: 10.3.0.10
+  service_ip_range: 10.3.0.0/24
+  etcd_endpoints: http://192.168.122.131:2379
+  etcd_authority: http://192.168.122.131:2379
+  # network:
+  #   type: flannel
+
+etcd:
+  cluster_nodes: ${#node_map.kubernetes.hosts}

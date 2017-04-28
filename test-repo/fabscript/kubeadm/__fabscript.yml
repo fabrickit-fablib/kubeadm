@@ -1,0 +1,7 @@
+master:
+  status_flow: [1]
+
+slave:
+  status_flow: [1]
+  require:
+    kubeadm/master: 1
