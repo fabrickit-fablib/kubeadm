@@ -22,21 +22,30 @@ container1:
     netmask: 255.255.255.0
   libvirt_vms:
     - name: kubernetes-ubuntu7-1
-      ip: 192.168.122.131
+      ports:
+        - {ip: 192.168.122.131, queues: 1, type: virtio}
+      nameservers:
+        - 192.168.122.1
       template: user-data_ubuntu16
       src_image: https://cloud-images.ubuntu.com/releases/16.04/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img
       vcpus: 1
       ram: 4096
       disk_size: 40
     - name: kubernetes-ubuntu7-2
-      ip: 192.168.122.132
+      ports:
+        - {ip: 192.168.122.132, queues: 1, type: virtio}
+      nameservers:
+        - 192.168.122.1
       template: user-data_ubuntu16
       src_image: https://cloud-images.ubuntu.com/releases/16.04/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img
       vcpus: 1
       ram: 4096
       disk_size: 40
     - name: kubernetes-ubuntu7-3
-      ip: 192.168.122.133
+      ports:
+        - {ip: 192.168.122.133, queues: 1, type: virtio}
+      nameservers:
+        - 192.168.122.1
       template: user-data_ubuntu16
       src_image: https://cloud-images.ubuntu.com/releases/16.04/release/ubuntu-16.04-server-cloudimg-amd64-disk1.img
       vcpus: 1
