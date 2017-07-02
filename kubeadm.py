@@ -41,10 +41,15 @@ class Kubeadm(SimpleBase):
             databag.set('kubeadm.token', token)
 
             if data['kubernetes_version'] == 'stable-1.5':
-                run('kubectl apply -f http://docs.projectcalico.org/v2.1/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml')  # noqa
+                filer.template('/tmp/calico-1.5.yaml', data=data)
+                run('kubectl apply -f /tmp/calico-1.5.yaml')  # noqa
+                # run('kubectl apply -f http://docs.projectcalico.org/v2.1/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml')  # noqa
                 # run('kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard-no-rbac.yaml')  # noqa
             if data['kubernetes_version'] == 'stable-1.6':
-                run('kubectl apply -f http://docs.projectcalico.org/v2.1/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml')  # noqa
+                filer.template('/tmp/calico-1.6.yaml', data=data)
+                print data
+                run('kubectl apply -f /tmp/calico-1.6.yaml')  # noqa
+                # run('kubectl apply -f http://docs.projectcalico.org/v2.1/getting-started/kubernetes/installation/hosted/kubeadm/1.6/calico.yaml')  # noqa
                 # run('kubectl apply -f https://raw.githubusercontent.com/kubernetes/dashboard/master/src/deploy/kubernetes-dashboard.yaml')  # noqa
 
         else:

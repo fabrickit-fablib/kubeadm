@@ -8,5 +8,6 @@ node_map:
   kubeadm_slave:
     hosts:
       - 192.168.122.132
+      - 192.168.122.133
     fabruns:
       - kubeadm/slave
